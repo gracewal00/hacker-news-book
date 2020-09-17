@@ -4,11 +4,9 @@ import './App.css';
 
 class App extends Component {
   render() {
-    // next line added
     const helloWorld = 'Welcome to the Road to learn React';
     return (
       <div className="App">
-        {/* next line added */}
         <h2>{helloWorld}</h2>
         {/* <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
