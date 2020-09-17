@@ -23,17 +23,21 @@ const list = [
 
 class App extends Component {
   render() {
-    const helloWorld = 'Welcome to the Road to learn React';
     return (
       <div className="App">
-        <h2>{helloWorld}</h2>
-        {/* <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p> */}
+        {list.map(function(item) {
+          return (
+            <div key={item.objectID}>
+              {/* when does item objectID come into play, whats the point */}
+              <span>
+                <a href={item.url}>{item.title}</a>
+              </span>
+              <span>{item.author}</span>
+              <span>{item.num_comments}</span>
+              <span>{item.points}</span>
+            </div>
+          );
+        })}
       </div>
     );
   }
