@@ -22,10 +22,24 @@ const list = [
 ];
 
 class App extends Component {
+
+  constructor(props) {
+    super(props);
+    //introduce class constructor
+
+    this.state = {
+      list,
+    };
+    //state bound to class (this), can access local state in whole component
+    //go from static list of items to list from local state
+  }
+
   render() {
     return (
       <div className="App">
-        {list.map(item => 
+        {this.state.list.map(item => 
+        //list is part of component now
+        //do not mutate state directly, use setState()
           <div key={item.objectID}>
             <span>
               <a href={item.url}>{item.title}</a>
@@ -41,3 +55,6 @@ class App extends Component {
 }
 
 export default App;
+
+// components ? 
+//internal component state pg 44
