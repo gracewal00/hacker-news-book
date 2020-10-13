@@ -32,6 +32,14 @@ class App extends Component {
     };
     //state bound to class (this), can access local state in whole component
     //go from static list of items to list from local state
+
+    this.onDismiss = this.onDismiss.bind(this);
+  }
+
+  onDismiss(id) {
+    const isNotId = item => item.objectID !== id;
+    const updatedList = this.state.list.filter(isNotId);
+    this.setState({ list: updatedList });
   }
 
   render() {
