@@ -21,6 +21,12 @@ const list = [
   },
 ];
 
+function isSearched(searchTerm) {
+  return function(item) {
+    return item.title.toLowerCase().includes(searchTerm.toLowerCase());
+  }
+}
+
 class App extends Component {
 
   constructor(props) {
@@ -29,11 +35,17 @@ class App extends Component {
 
     this.state = {
       list,
+      searchTerm: '',
     };
     //state bound to class (this), can access local state in whole component
     //go from static list of items to list from local state
 
+    this.onSearchChange = this.onSearchChange.bind(this);
     this.onDismiss = this.onDismiss.bind(this);
+  }
+
+  onSearchChange(event) {
+    this.setState({ searchTerm: event.target.value });
   }
 
   onDismiss(id) {
@@ -46,9 +58,12 @@ class App extends Component {
     return (
       <div className="App">
         <form>
-          <input type="text" />
+          <input
+            type="text"
+            onChange={this.onSearchChange}
+          />
         </form>
-        {this.state.list.map(item => 
+        {this.state.list.filter(isSearched(this.state.searchTerm)).map(item => 
         //list is part of component now
         //do not mutate state directly, use setState()
           <div key={item.objectID}>
@@ -80,3 +95,6 @@ export default App;
 // doSomething() vs doSomething pg 59
 // wrapping func & defined func pg 60
 // why would it run immediatly but not on button click?
+// does binding link this to funtion or to component?
+
+//10-13-20 ; pg 72 ; ES6 Destructuring
