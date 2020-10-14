@@ -45,6 +45,9 @@ class App extends Component {
   render() {
     return (
       <div className="App">
+        <form>
+          <input type="text" />
+        </form>
         {this.state.list.map(item => 
         //list is part of component now
         //do not mutate state directly, use setState()
@@ -73,4 +76,7 @@ class App extends Component {
 export default App;
 
 // components ? 
-//internal component state pg 44
+// internal component state pg 44
+// doSomething() vs doSomething pg 59
+// wrapping func & defined func pg 60
+// why would it run immediatly but not on button click?
