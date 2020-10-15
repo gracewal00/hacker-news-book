@@ -60,7 +60,9 @@ class App extends Component {
         <Search
           value={searchTerm}        
           onChange={this.onSearchChange}
-        />
+        >
+          Search
+        </Search>
         <Table
           list={list}
           pattern={searchTerm}
@@ -73,10 +75,10 @@ class App extends Component {
 
 class Search extends Component {
   render() {
-    const { value, onChange } = this.props;
+    const { value, onChange, children } = this.props;
     return (
       <form>
-        <input
+        {children} <input
           type="text"
           value={value}
           onChange={onChange}
@@ -122,3 +124,4 @@ export default App;
 // wrapping func & defined func pg 60
 // why would it run immediatly but not on button click?
 // does binding link this to funtion or to component?
+// children creates search? pg 80 how does it know to put search there?
