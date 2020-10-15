@@ -55,19 +55,43 @@ class App extends Component {
 
   render() {
     const { searchTerm, list } = this.state;
-    // does searchTerm/list order matter?
     return (
       <div className="App">
-        <form>
-          <input
-            type="text"
-            value={searchTerm}
-            onChange={this.onSearchChange}
-          />
-        </form>
-        {list.filter(isSearched(searchTerm)).map(item => 
-        //list is part of component now
-        //do not mutate state directly, use setState()
+        <Search
+          value={searchTerm}        
+          onChange={this.onSearchChange}
+        />
+        <Table
+          list={list}
+          pattern={searchTerm}
+          onDismiss={this.onDismiss}
+        />       
+      </div>
+    );
+  }
+}
+
+class Search extends Component {
+  render() {
+    const { value, onChange } = this.props;
+    return (
+      <form>
+        <input
+          type="text"
+          value={value}
+          onChange={onChange}
+        />
+      </form>
+    );
+  }
+}
+
+class Table extends Component {
+  render() {
+    const { list, pattern, onDismiss } = this.props;
+    return (
+      <div>
+        {list.filter(isSearched(pattern)).map(item =>
           <div key={item.objectID}>
             <span>
               <a href={item.url}>{item.title}</a>
@@ -98,5 +122,3 @@ export default App;
 // wrapping func & defined func pg 60
 // why would it run immediatly but not on button click?
 // does binding link this to funtion or to component?
-
-//10-13-20 ; pg 72 ; ES6 Destructuring
