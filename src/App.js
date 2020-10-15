@@ -31,7 +31,6 @@ class App extends Component {
 
   constructor(props) {
     super(props);
-    //introduce class constructor
 
     this.state = {
       list,
@@ -55,6 +54,8 @@ class App extends Component {
   }
 
   render() {
+    const { searchTerm, list } = this.state;
+    // does searchTerm/list order matter?
     return (
       <div className="App">
         <form>
@@ -63,7 +64,7 @@ class App extends Component {
             onChange={this.onSearchChange}
           />
         </form>
-        {this.state.list.filter(isSearched(this.state.searchTerm)).map(item => 
+        {list.filter(isSearched(searchTerm)).map(item => 
         //list is part of component now
         //do not mutate state directly, use setState()
           <div key={item.objectID}>
