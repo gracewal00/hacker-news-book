@@ -73,19 +73,17 @@ class App extends Component {
   }
 }
 
-class Search extends Component {
-  render() {
-    const { value, onChange, children } = this.props;
-    return (
-      <form>
-        {children} <input
-          type="text"
-          value={value}
-          onChange={onChange}
-        />
-      </form>
-    );
-  }
+function Search(props) {
+  const { value, onChange, children } = props;
+  return (
+    <form>
+      {children} <input
+        type="text"
+        value={value}
+        onChange={onChange}
+      />
+    </form>
+  );
 }
 
 class Table extends Component {
@@ -126,7 +124,7 @@ class Button extends Component {
         className={className}
         type="button"
       >
-        {children}
+        {children} 
       </button>
     );
   }
@@ -140,4 +138,6 @@ export default App;
 // wrapping func & defined func pg 60
 // why would it run immediatly but not on button click?
 // does binding link this to funtion or to component?
-// children creates search? pg 80 how does it know to put search there?
+// children prop slightly confusing
+
+//10-14-20 ; pg 85 ; Component Declarations
