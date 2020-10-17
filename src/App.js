@@ -1,25 +1,11 @@
 import React, { Component } from 'react';
-//import logo from './logo.svg';
 import './App.css';
 
-const list = [
-  {
-    title: 'React',
-    url: 'https://facebook.github.io/react/',
-    author: 'Jordan Walke',
-    num_comments: 3,
-    points: 4,
-    objectID: 0,
-  },
-  {
-    title: 'Redux',
-    url: 'https://github.com/reactjs/redux',
-    author: 'Dan Abramov, Andrew Clark',
-    num_comments: 2,
-    points: 5,
-    objectID: 1,
-  },
-];
+const DEFAULT_QUERY = 'redux';
+
+const PATH_BASE = 'https://hn.algolia.com/api/v1';
+const PATH_SEARCH = '/search';
+const PARAM_SEARCH = 'query=';
 
 function isSearched(searchTerm) {
   return function(item) {
@@ -33,14 +19,26 @@ class App extends Component {
     super(props);
 
     this.state = {
-      list,
-      searchTerm: '',
+      result: null,
+      searchTerm: DEFAULT_QUERY
     };
-    //state bound to class (this), can access local state in whole component
-    //go from static list of items to list from local state
 
+    this.setSearchTopStories = this.setSearchTopStories.bind(this);
     this.onSearchChange = this.onSearchChange.bind(this);
     this.onDismiss = this.onDismiss.bind(this);
+  }
+
+  setSearchTopStories(result) {
+    this.setState({ result });
+  }
+
+  componentDidMount() {
+    const { searchTerm } = this.state;
+    
+    fetch(`${PATH_BASE}${PATH_SEARCH}?${PARAM_SEARCH}${searchTerm}`)
+      .then(response => response.json())
+      .then(result => this.setSearchTopStories(result))
+      .catch(error => error);
   }
 
   onSearchChange(event) {
@@ -54,7 +52,12 @@ class App extends Component {
   }
 
   render() {
-    const { searchTerm, list } = this.state;
+    const { searchTerm, result } = this.state;
+
+    if (!result) { return null; }
+
+    console.log(this.state); /*optional*/
+
     return (
       <div className="page">
         <div className="interactions">
@@ -66,7 +69,7 @@ class App extends Component {
           </Search>
         </div>
         <Table
-          list={list}
+          list={result.hits}
           pattern={searchTerm}
           onDismiss={this.onDismiss}
         />       
@@ -133,8 +136,8 @@ export default App;
 // wrapping func & defined func pg 60
 // why would it run immediatly but not on button click?
 // does binding link this to funtion or to component?
-// children prop slightly confusing
-// did i refactor Button component correctly?
 // Go back to understand the styling pg 89
+// review on pg 95
+// read more about lifecycle methods pg 99, vue page
 
-//10-14-20 ; pg 85 ; Component Declarations
+//10-15-20 ; pg 96 ; Getting real with an API
