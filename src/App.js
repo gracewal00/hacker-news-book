@@ -47,8 +47,10 @@ class App extends Component {
 
   onDismiss(id) {
     const isNotId = item => item.objectID !== id;
-    const updatedList = this.state.list.filter(isNotId);
-    this.setState({ list: updatedList });
+    const updatedHits = this.state.result.hits.filter(isNotId);
+    this.setState({
+      result: { ...this.state.result, hits: updatedHits }
+    });
   }
 
   render() {
@@ -139,5 +141,6 @@ export default App;
 // Go back to understand the styling pg 89
 // review on pg 95
 // read more about lifecycle methods pg 99, vue page
+// Object.assign() ? target obj vs source obj ?
 
 //10-15-20 ; pg 96 ; Getting real with an API
