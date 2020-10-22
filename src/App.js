@@ -55,11 +55,6 @@ class App extends Component {
 
   render() {
     const { searchTerm, result } = this.state;
-
-    if (!result) { return null; }
-
-    console.log(this.state); /*optional*/
-
     return (
       <div className="page">
         <div className="interactions">
@@ -70,11 +65,15 @@ class App extends Component {
             Search
           </Search>
         </div>
-        <Table
-          list={result.hits}
-          pattern={searchTerm}
-          onDismiss={this.onDismiss}
-        />       
+        { result
+        // is the '?' like an if statement?
+          ? <Table
+            list={result.hits}
+            pattern={searchTerm}
+            onDismiss={this.onDismiss}
+          />
+          : null
+        }
       </div>
     );
   }
@@ -142,5 +141,6 @@ export default App;
 // review on pg 95
 // read more about lifecycle methods pg 99, vue page
 // Object.assign() ? target obj vs source obj ?
+// spread operators pg 104 ; under onDismiss
 
-//10-15-20 ; pg 96 ; Getting real with an API
+//10-16-20 ; pg 107 ; Conditional Rendering
