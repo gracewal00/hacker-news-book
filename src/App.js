@@ -209,6 +209,12 @@ const Button = ({
 
 export default App;
 
+export {
+  Button,
+  Search,
+  Table,
+};
+
 // components ?
 // internal component state pg 44
 // doSomething() vs doSomething pg 59
@@ -220,7 +226,10 @@ export default App;
 // read more about lifecycle methods pg 99, vue page
 // Object.assign() ? target obj vs source obj ?
 // spread operators pg 104 ; under onDismiss, dismiss button?
+// index.js ; API point ? ; sources only import from here? pg 144
 
-//review client cache pg 120
+// review client cache pg 120
+// recap on pg 135
+// code splitting, recommend to apply at end of book ; pg 141
 
-//02-18-21 ; 
+//02-18-21 ; pg 137
