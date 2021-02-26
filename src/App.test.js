@@ -35,6 +35,14 @@ describe('App', () => {
     expect(tree).toMatchSnapshot();
   });
 
+  it('shows two items in list', () => {
+    const element = shallow(
+      <App />
+    );
+
+    expect(element.find('.table-row').length).toBe(2);
+  });
+
 });
 
 describe('Search', () => {
@@ -53,6 +61,14 @@ describe('Search', () => {
     expect(tree).toMatchSnapshot();
   });
 
+  it('shows two items in list', () => {
+    const element = shallow(
+      <Search>Search</Search>
+    );
+
+    expect(element.find('.table-row').length).toBe(2);
+  });
+
 });
 
 describe('Button', () => {
@@ -69,6 +85,14 @@ describe('Button', () => {
     );
     let tree = component.toJSON();
     expect(tree).toMatchSnapshot();
+  });
+
+  it('shows two items in list', () => {
+    const element = shallow(
+      <Button>Give Me More</Button>
+    );
+
+    expect(element.find('.table-row').length).toBe(2);
   });
 
 });
