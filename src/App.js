@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import './App.css';
+import PropTypes from 'prop-types';
 
 const DEFAULT_QUERY = 'redux';
 const DEFAULT_HPP = '100';
@@ -71,7 +72,7 @@ class App extends Component {
     this.fetchSearchTopStories(searchTerm);
   }
 
-  ComponentWillUnmount() {
+  componentWillUnmount() {
     this._isMounted = false;
   }
 
@@ -196,8 +197,8 @@ const Table = ({ list, onDismiss }) =>
 
 const Button = ({
   onClick,
-  className = '',
-  children,
+  className,
+  children
 }) => 
   <button
     onClick={onClick}
@@ -206,6 +207,39 @@ const Button = ({
   >
     {children} 
   </button>
+
+Button.defaultProps = {
+  className: '',
+};
+
+Button.propTypes = {
+  onClick: PropTypes.func.isRequired,
+  className: PropTypes.string,
+  children: PropTypes.node.isRequired,
+};
+
+Table.propTypes = {
+  //list: propTypes.array.isRequired,
+  list: PropTypes.arrayOf(
+    PropTypes.shape({
+      objectID: PropTypes.string.isRequired,
+      //object ID required as code depends on it, others only displayed
+      author: PropTypes.string,
+      url: PropTypes.string,
+      num_comments: PropTypes.number,
+      points: PropTypes.number,
+    })
+  ).isRequired,
+  onDismiss: PropTypes.func.isRequired,
+};
+
+Search.propTypes = {
+  value: PropTypes.object,
+  onChange: PropTypes.func,
+  onSubmit: PropTypes.func,
+  children: PropTypes.node,
+  // are these right? ; .isRequired?
+}
 
 export default App;
 
@@ -228,9 +262,13 @@ export {
 // spread operators pg 104 ; under onDismiss, dismiss button?
 // index.js ; API point ? ; sources only import from here? pg 144
 // enzyme - when to use which render mechanism - pg 154
+// what is typed language // types? - pg 155
+// confused by PropType? what does it actually do? ; .isRequired- pg 155
+// why change Button className? - pg 158
+// PropTypes pg 156
 
 // review client cache pg 120
 // recap on pg 135
 // code splitting, recommend to apply at end of book ; pg 141
 
-//02-25-21 ; pg 
+//02-28-21 ; pg 
