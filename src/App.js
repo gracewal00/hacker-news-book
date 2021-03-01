@@ -155,17 +155,48 @@ class App extends Component {
   }
 }
 
-const Search = ({ value, onChange, onSubmit, children }) =>
-  <form onSubmit={onSubmit}>
-    <input
-      type="text"
-      value={value}
-      onChange={onChange}
-    />
-    <button type="submit">
-      {children}
-    </button>
-  </form>
+class Search extends Component {
+  componentDidMount() {
+    if(this.input) {
+      this.input.focus();
+    }
+  }
+
+  render() {
+    const {
+      value,
+      onChange,
+      onSubmit,
+      children
+    } = this.props;
+
+    return (
+      <form onSubmit={onSubmit}>
+        <input
+          type="text"
+          value={value}
+          onChange={onChange}
+          ref={(node) => { this.input = node; }}
+        />
+        <button type="submit">
+          {children}
+        </button>
+      </form>      
+    );
+  }
+}
+
+// const Search = ({ value, onChange, onSubmit, children }) =>
+//   <form onSubmit={onSubmit}>
+//     <input
+//       type="text"
+//       value={value}
+//       onChange={onChange}
+//     />
+//     <button type="submit">
+//       {children}
+//     </button>
+//   </form>
 
 const Table = ({ list, onDismiss }) =>
   <div className="table">
@@ -263,12 +294,13 @@ export {
 // index.js ; API point ? ; sources only import from here? pg 144
 // enzyme - when to use which render mechanism - pg 154
 // what is typed language // types? - pg 155
-// confused by PropType? what does it actually do? ; .isRequired- pg 155
 // why change Button className? - pg 158
 // PropTypes pg 156
+// whats the point of adding this? - pg 162
+// why not just use let input (functional stateless component)
 
 // review client cache pg 120
 // recap on pg 135
 // code splitting, recommend to apply at end of book ; pg 141
 
-//02-28-21 ; pg 
+//02-28-21 ; pg 166
