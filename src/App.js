@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { sortBy } from 'lodash';
+import classNames from 'classnames';
 import './App.css';
 import PropTypes from 'prop-types';
 
@@ -246,6 +247,7 @@ const Table = ({
           <Sort
             sortKey={'TITLE'}
             onSort={onSort}
+            activeSortKey={sortKey}
           >
             Title
           </Sort>
@@ -254,6 +256,7 @@ const Table = ({
           <Sort
             sortKey={'AUTHOR'}
             onSort={onSort}
+            activeSortKey={sortKey}
           >
             Author
           </Sort>
@@ -262,6 +265,7 @@ const Table = ({
           <Sort
             sortKey={'COMMENTS'}
             onSort={onSort}
+            activeSortKey={sortKey}
           >
             Comments
           </Sort>
@@ -270,6 +274,7 @@ const Table = ({
           <Sort
             sortKey={'POINTS'}
             onSort={onSort}
+            activeSortKey={sortKey}
           >
             Points
           </Sort>
@@ -329,13 +334,26 @@ const withLoading = (Component) => ({ isLoading, ...rest }) =>
 
 const ButtonWithLoading = withLoading(Button);
 
-const Sort = ({ sortKey, onSort, children }) =>
+const Sort = ({
+  sortKey,
+  activeSortKey,
+  onSort,
+  children
+}) => {
+  const sortClass = classNames(
+    'button-inline',
+    { 'button-active': sortKey === activeSortKey}
+  );
+
+  return (
   <Button
     onClick={() => onSort(sortKey)}
-    className="button-inline"
+    className={sortClass}
   >
     {children}
   </Button>
+  );
+}
 
 Button.defaultProps = {
   className: '',
