@@ -12,9 +12,6 @@ const PARAM_SEARCH = 'query=';
 const PARAM_PAGE = 'page=';
 const PARAM_HPP = 'hitsPerPage=';
 
-const Loading = () =>
-  <div>Loading ...</div>
-
 class App extends Component {
   _isMounted = false;
 
@@ -154,12 +151,11 @@ class App extends Component {
           />
         }
         <div className="interactions">
-          { isLoading
-            ? <Loading />
-            : <Button onClick={() => this.fetchSearchTopStories(searchKey, page + 1)}>
-              More
-            </Button>
-          }
+          <ButtonWithLoading
+            isLoading={isLoading}
+            onClick={() => this.fetchSearchTopStories(searchKey, page + 1)}>
+            More
+          </ButtonWithLoading>
         </div>
       </div>
     );
@@ -250,6 +246,16 @@ const Button = ({
     {children} 
   </button>
 
+const Loading = () => 
+  <div>Loading ...</div>
+
+const withLoading = (Component) => ({ isLoading, ...rest }) =>
+  isLoading
+    ? <Loading />
+    : <Component { ...rest } />
+
+const ButtonWithLoading = withLoading(Button);
+
 Button.defaultProps = {
   className: '',
 };
@@ -309,9 +315,11 @@ export {
 // PropTypes pg 156
 // whats the point of adding this? - pg 162
 // why not just use let input (functional stateless component)
+// how do i actually run the tests / snapshot
 
 // review client cache pg 120
 // recap on pg 135
 // code splitting, recommend to apply at end of book ; pg 141
+// run snapshot/test again & fix component - pg 173
 
 //03-01-21 ; pg 170 (Higher-Order Components)
