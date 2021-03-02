@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { sortBy } from 'lodash';
 import './App.css';
 import PropTypes from 'prop-types';
 
@@ -11,6 +12,14 @@ const PATH_SEARCH = '/search';
 const PARAM_SEARCH = 'query=';
 const PARAM_PAGE = 'page=';
 const PARAM_HPP = 'hitsPerPage=';
+
+const SORTS = {
+  NONE: list => list,
+  TITLE: list => sortBy(list, 'title'),
+  AUTHOR: list => sortBy(list, 'author'),
+  COMMENTS: list => sortBy(list, 'num_comments').reverse(),
+  POINTS: list => sortBy(list, 'points').reverse(),
+};
 
 class App extends Component {
   _isMounted = false;
@@ -24,6 +33,7 @@ class App extends Component {
       searchTerm: DEFAULT_QUERY,
       error: null,
       isLoading: false,
+      sortKey: 'NONE',
     };
 
     this.needsToSearchTopStories = this.needsToSearchTopStories.bind(this);
@@ -32,6 +42,7 @@ class App extends Component {
     this.onSearchChange = this.onSearchChange.bind(this);
     this.onSearchSubmit = this.onSearchSubmit.bind(this);
     this.onDismiss = this.onDismiss.bind(this);
+    this.onSort = this.onSort.bind(this);
   }
 
   needsToSearchTopStories(searchTerm) {
@@ -109,13 +120,18 @@ class App extends Component {
     event.preventDefault();
   }
 
+  onSort(sortKey) {
+    this.setState({ sortKey });
+  }
+
   render() {
     const {
       searchTerm,
       results,
       searchKey,
       error,
-      isLoading
+      isLoading,
+      sortKey
     } = this.state;
 
     const page = (
@@ -147,6 +163,8 @@ class App extends Component {
           </div>
           : <Table
             list={list}
+            sortKey={sortKey}
+            onSort={this.onSort}
             onDismiss={this.onDismiss}
           />
         }
@@ -205,9 +223,51 @@ class Search extends Component {
 //     </button>
 //   </form>
 
-const Table = ({ list, onDismiss }) =>
+const Table = ({
+  list,
+  sortKey,
+  onSort,
+  onDismiss
+}) =>
   <div className="table">
-    {list.map(item =>
+    <div className="table-header">
+      <span style={{ width: '40%' }}>
+        <Sort
+          sortKey={'TITLE'}
+          onSort={onSort}
+        >
+          Title
+        </Sort>
+      </span>
+      <span style={{ width: '30%' }}>
+        <Sort
+          sortKey={'AUTHOR'}
+          onSort={onSort}
+        >
+          Author
+        </Sort>
+      </span>
+      <span style={{ width: '10%' }}>
+        <Sort
+          sortKey={'COMMENTS'}
+          onSort={onSort}
+        >
+          Comments
+        </Sort>
+      </span>
+      <span style={{ width: '10%' }}>
+        <Sort
+          sortKey={'POINTS'}
+          onSort={onSort}
+        >
+          Points
+        </Sort>
+      </span>
+      <span style={{ width: '10%' }}>
+        Archive
+      </span>
+    </div>
+    {SORTS[sortKey](list).map(item =>
       <div key={item.objectID} className="table-row">
         <span style={{ width: '40%' }}>
           <a href={item.url}>{item.title}</a>
@@ -224,7 +284,7 @@ const Table = ({ list, onDismiss }) =>
         <span style={{ width: '10%' }}>
           <Button 
             onClick={() => onDismiss(item.objectID)}
-            className="buton-inline"
+            className="button-inline"
           >
             Dismiss
           </Button>
@@ -255,6 +315,14 @@ const withLoading = (Component) => ({ isLoading, ...rest }) =>
     : <Component { ...rest } />
 
 const ButtonWithLoading = withLoading(Button);
+
+const Sort = ({ sortKey, onSort, children }) =>
+  <Button
+    onClick={() => onSort(sortKey)}
+    className="button-inline"
+  >
+    {children}
+  </Button>
 
 Button.defaultProps = {
   className: '',
@@ -316,10 +384,11 @@ export {
 // whats the point of adding this? - pg 162
 // why not just use let input (functional stateless component)
 // how do i actually run the tests / snapshot
+// HOCs??, don't even know what to ask, don't understand anything
 
 // review client cache pg 120
 // recap on pg 135
 // code splitting, recommend to apply at end of book ; pg 141
 // run snapshot/test again & fix component - pg 173
 
-//03-01-21 ; pg 170 (Higher-Order Components)
+//03-01-21 ; pg 180 (Advanced Sorting)
