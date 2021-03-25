@@ -421,5 +421,7 @@ export {
 // recap on pg 135
 // code splitting, recommend to apply at end of book ; pg 141
 // run snapshot/test again & fix component - pg 173
+// sort exercises pg 186 
 
-//03-01-21 ; pg 182 (Advanced Sorting)
+//03-01-21 ; pg 188 (State Management in React and beyond)
+// source code official repository - pg 187
